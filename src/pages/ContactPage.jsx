@@ -1,0 +1,26 @@
+import React from "react";
+import SectionTitle from "../components/SectionTitle.jsx";
+import ContactForm from "../components/ContactForm.jsx";
+
+function ContactPage() {
+  return (
+    <section id="contact">
+      <SectionTitle>Contact Us</SectionTitle>
+      <div className="contact-grid">
+        <div>
+          <p>
+            Ready to begin your journey? Book a free consultation or send us a message.
+          </p>
+          <p>
+            📍 Janakpur, Nepal <br />
+            ✉️ info@mkaconsulting.com <br />
+            📞 +977 40 000 0000
+          </p>
+        </div>
+        <ContactForm />
+      </div>
+    </section>
+  );
+}
+
+export default ContactPage;
