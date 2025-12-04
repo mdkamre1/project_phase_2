@@ -6,6 +6,8 @@ import ServicesPage from "./pages/ServicesPage.jsx";
 import DestinationsPage from "./pages/DestinationsPage.jsx";
 import SuccessPage from "./pages/SuccessPage.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
+import AdminDashboard from "./pages/AdminDashboard.jsx";
+import AdminLogin from "./pages/AdminLogin.jsx";
 
 function App() {
   return (
