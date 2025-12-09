@@ -360,3 +360,66 @@ footer {
 .admin-table tr:hover {
   background: #f1f5f9;
 }
+/* Search Box */
+.service-search {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-box {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  max-width: 450px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  animation: popup 0.3s ease-out;
+}
+
+@keyframes popup {
+  from { transform: scale(0.8); opacity: 0;}
+  to { transform: scale(1); opacity: 1;}
+}
+.enquiry-form input,
+.enquiry-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 14px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-size: 16px;
+}
+
+.enquiry-form input:focus,
+.enquiry-form textarea:focus {
+  border-color: #0077b6;
+  outline: none;
+}
+
+.enquiry-form .grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .enquiry-form .grid {
+    grid-template-columns: 1fr;
+  }
+}
