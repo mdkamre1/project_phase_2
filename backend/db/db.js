@@ -1,6 +1,7 @@
-/* eslint-env node */
-const mysql = require("mysql2");
-require("dotenv").config();
+import mysql from "mysql2";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const db = mysql.createPool({
   host: "localhost",
@@ -11,4 +12,4 @@ const db = mysql.createPool({
   connectionLimit: 10,
 });
 
-module.exports = db;
+export default db;

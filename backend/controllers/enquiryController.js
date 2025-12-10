@@ -1,19 +1,36 @@
-/* eslint-env node */
-const db = require("../db/db");
+import db from "../db/db.js";
 
-exports.saveEnquiry = (req, res) => {
-  const { full_name, email, phone, nationality, program, message } = req.body;
+// Add enquiry
+export const addEnquiry = (req, res) => {
+  const { name, email, message } = req.body;
+  if (!name || !email || !message)
+    return res.status(400).json({ error: "All fields required" });
 
-  if (!full_name || !email || !phone || !nationality || !program || !message) {
-    return res.status(400).json({ error: "All fields are required" });
-  }
+  db.query(
+    "INSERT INTO enquiries (name, email, message) VALUES (?, ?, ?)",
+    [name, email, message],
+    (err) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.status(201).json({ message: "Enquiry submitted successfully" });
+    }
+  );
+};
 
-  const sql =
-    "INSERT INTO enquiries (full_name, email, phone, nationality, program, message) VALUES (?, ?, ?, ?, ?, ?)";
+// Read enquiries
+export const getEnquiries = (req, res) => {
+  db.query(
+    "SELECT * FROM enquiries ORDER BY created_at DESC",
+    (err, results) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json(results);
+    }
+  );
+};
 
-  db.query(sql, [full_name, email, phone, nationality, program, message], (err) => {
+// Delete
+export const deleteEnquiry = (req, res) => {
+  db.query("DELETE FROM enquiries WHERE id = ?", [req.params.id], (err) => {
     if (err) return res.status(500).json({ error: err.message });
-
-    return res.json({ success: true, message: "Enquiry submitted successfully!" });
+    res.json({ message: "Enquiry deleted successfully" });
   });
 };

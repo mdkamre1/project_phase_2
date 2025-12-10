@@ -1,0 +1,19 @@
+### Register Admin (Run ONE time)
+POST http://localhost:5000/api/admin/register
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "1234"
+}
+
+
+### Submit Enquiry
+POST http://localhost:5000/api/enquiries
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john@example.com",
+  "message": "I want consultation"
+}

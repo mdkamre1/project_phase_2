@@ -1,19 +1,12 @@
-// @ts-nocheck
-
-module.exports = {
+export default {
   env: {
     node: true,
-    commonjs: true,
     es2021: true,
   },
-  extends: [
-    "eslint:recommended",
-    "plugin:node/recommended"
-  ],
+  extends: ["eslint:recommended"],
   parserOptions: {
-    ecmaVersion: 12,
+    ecmaVersion: "latest",
+    sourceType: "module",
   },
-  rules: {
-    "no-undef": "off"
-  }
+  rules: {},
 };
