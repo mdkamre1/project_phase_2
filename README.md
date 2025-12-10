@@ -1,16 +1,101 @@
-# React + Vite
+# 🎓 Consulting Education Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack web application for managing student applications, programs, enquiries, and admin operations for a consulting/education agency.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tech Stack
 
-## React Compiler
+### 🔧 Backend
+- Node.js
+- Express.js
+- MySQL Database
+- Multer (for uploads)
+- JWT Authentication
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 💻 Frontend
+- React.js (Vite + JSX)
+- Axios
+- CSS Modules
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📁 Project Structure
+
+```bash
+project_phase_2/
+│
+├── backend/
+│   ├── controllers/
+│   ├── routes/
+│   ├── middleware/
+│   ├── db/
+│   │   └── schema.sql      # Database tables
+│   ├── server.js
+│
+├── consulting-edu/
+│   ├── src/
+│   │   ├── api/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── styles/
+│   │   ├── main.jsx
+│   └── vite.config.js
+│
+└── README.md
+🗄️ Database Schema
+
+The project uses MySQL. Key tables include:
+    students – Students applying
+    applications – Students + Programs (Many-to-Many)
+    admins – Login users
+    programs – Educational programs
+    enquiries – Contact enquiries
+    testimonials – Student testimonials
+
+📌 Import the database
+
+SOURCE schema.sql;
+▶️ How to Run the Project
+📌 Backend Setup
+    cd backend
+    npm install
+    npm start
+
+
+📌 Create .env file in backend:
+
+    DB_HOST=localhost
+    DB_USER=root
+    DB_PASS=yourpassword
+    DB_NAME=consulting
+    JWT_SECRET=yourSecretKey
+
+💻 Frontend Setup
+    cd consulting-edu
+    npm install
+    npm run dev
+
+🔐 Admin Features
+    Secure JWT Login
+    Manage Programs
+    View & Update Applications
+    Manage Testimonials
+    Manage Destinations
+    Admin Dashboard
+
+👨‍🎓 Student Features
+    Apply for a program
+    Submit enquiry form
+    Browse destinations & programs
+    View testimonials
+
+
+🤝 Contributing
+    Feel free to fork, improve, and submit pull requests.
+
+📄 License
+    This project is licensed under the MKD Consulting.
+
+💙 Made with dedication & learning
