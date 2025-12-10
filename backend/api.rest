@@ -17,3 +17,85 @@ Content-Type: application/json
   "email": "john@example.com",
   "message": "I want consultation"
 }
+
+
+### Get Programs (Public)
+GET http://localhost:5000/api/programs
+
+
+### Add Program (Admin Only)
+POST http://localhost:5000/api/programs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsImlhdCI6MTc2NTM3NjA1NiwiZXhwIjoxNzY1OTgwODU2fQ.gGctoRvfxgYpIrGgFOel81_HR76QsUdoAJlrftFySM8
+
+{
+  "title": "Data Science",
+  "country": "Canada",
+  "description": "Study analytics, machine learning, AI and statistics.",
+  "tuition_fee": "$15,000/year"
+}
+
+
+### Admin Login
+### Login Admin
+POST http://localhost:5000/api/admin/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "1234"
+}
+
+
+### Get Destinations (Public)
+GET http://localhost:5000/api/destinations
+
+
+
+
+### Add Destination (Admin Only)
+POST http://localhost:5000/api/destinations
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsImlhdCI6MTc2NTM3NjA1NiwiZXhwIjoxNzY1OTgwODU2fQ.gGctoRvfxgYpIrGgFOel81_HR76QsUdoAJlrftFySM8
+
+
+{
+  "name": "Australia",
+  "region": "Oceania",
+  "description": "Top universities & post-study work options.",
+  "image_url": "https://i.ibb.co/0jqQkXk/australia.jpg"
+}
+
+### Get Testimonials (Public)
+GET http://localhost:5000/api/testimonials
+
+
+
+### Add Testimonial (Admin Only)
+POST http://localhost:5000/api/testimonials
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsImlhdCI6MTc2NTM3NjA1NiwiZXhwIjoxNzY1OTgwODU2fQ.gGctoRvfxgYpIrGgFOel81_HR76QsUdoAJlrftFySM8 
+
+{
+  "name": "Mira Singh",
+  "country": "India",
+  "testimonial": "MDKC helped me get into the University of Helsinki!",
+  "image_url": "https://i.ibb.co/mXF9Wwd/student.jpg"
+}
+
+
+### Admin Dashboard
+GET http://localhost:5000/api/admin/dashboard
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsImlhdCI6MTc2NTM3NjA1NiwiZXhwIjoxNzY1OTgwODU2fQ.gGctoRvfxgYpIrGgFOel81_HR76QsUdoAJlrftFySM8
+
+
+
+### Send Contact Message
+POST http://localhost:5000/api/enquiries
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "message": "Hello, I would like a consultation."
+}

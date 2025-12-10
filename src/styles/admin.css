@@ -1,0 +1,97 @@
+/* ===== Admin Panel Global Styles ===== */
+
+.admin-container {
+  padding: 40px;
+  max-width: 1200px;
+  margin: auto;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.admin-container h1 {
+  font-size: 32px;
+  margin-bottom: 5px;
+  color: #003366;
+  font-weight: 600;
+}
+
+.admin-container p {
+  color: #444;
+  margin-bottom: 20px;
+}
+
+/* ===== Table Styling ===== */
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+.admin-table th, .admin-table td {
+  border: 1px solid #e1e1e1;
+  padding: 10px;
+  text-align: left;
+}
+
+.admin-table thead {
+  background: #003366;
+  color: white;
+}
+
+.admin-table tbody tr:nth-child(even) {
+  background: #f7f7f7;
+}
+
+/* ===== Buttons ===== */
+
+.admin-btn {
+  padding: 6px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.btn-delete {
+  background: #d9534f;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #b52a27;
+}
+
+/* ==== Form Styling ==== */
+
+.admin-form {
+  margin-top: 30px;
+  background: #fefefe;
+  padding: 20px;
+  border: 1px solid #e1e1e1;
+  border-radius: 6px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.admin-form input,
+.admin-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.admin-form button {
+  background: #003366;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.admin-form button:hover {
+  background: #0055aa;
+}

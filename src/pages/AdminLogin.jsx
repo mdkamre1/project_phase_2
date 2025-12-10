@@ -1,73 +1,52 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import api, { setAuthToken } from "../api/api";
 
-function AdminLogin() {
-  const [form, setForm] = useState({ username: "", password: "" });
+const AdminLogin = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
-  }
-
-  async function handleSubmit(e) {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setError("");
 
     try {
-      const res = await fetch("http://localhost:4000/api/admin/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
+      const res = await api.post("/admin/login", { username, password });
 
-      if (!res.ok) {
-        setError("Invalid username or password");
-        return;
-      }
+      const token = res.data.token;
+      localStorage.setItem("token", token);
+      setAuthToken(token);
 
-      const data = await res.json();
-      localStorage.setItem("adminToken", data.token);
-      navigate("/admin"); // go to dashboard
-    } catch {
-      setError("Something went wrong. Try again.");
+      alert("Login successful!");
+      window.location.href = "/admin/dashboard";
+    } catch (err) {
+      setError(err.response?.data?.error || "Login failed");
     }
-  }
+  };
 
   return (
-    <div className="container" style={{ marginTop: "60px", maxWidth: "400px" }}>
-      <h2 style={{ marginBottom: "20px" }}>Admin Login</h2>
-
-      <form onSubmit={handleSubmit}>
+    <div style={{ padding: "80px", textAlign: "center" }}>
+      <h1>Admin Login</h1>
+      <form onSubmit={handleLogin} style={{ marginTop: "20px" }}>
         <input
           type="text"
-          name="username"
           placeholder="Username"
-          value={form.username}
-          onChange={handleChange}
+          onChange={(e) => setUsername(e.target.value)}
           required
-        />
+        /><br /><br />
 
         <input
           type="password"
-          name="password"
           placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
+          onChange={(e) => setPassword(e.target.value)}
           required
-        />
+        /><br /><br />
 
-        <button className="btn primary" type="submit" style={{ width: "100%" }}>
-          Login
-        </button>
+        <button type="submit">Login</button>
+
+        {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
-
-      {error && (
-        <p style={{ marginTop: 10, color: "red" }}>{error}</p>
-      )}
     </div>
   );
-}
+};
 
 export default AdminLogin;

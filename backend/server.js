@@ -16,6 +16,7 @@ import adminRoutes from "./routes/adminRoutes.js";
 import testimonialRoutes from "./routes/testimonialRoutes.js";
 import destinationRoutes from "./routes/destinationRoutes.js";
 import programRoutes from "./routes/programRoutes.js";
+import dashboardRoutes from "./routes/dashboardRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -45,9 +46,13 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/testimonials", testimonialRoutes);
 app.use("/api/destinations", destinationRoutes);
 app.use("/api/programs", programRoutes);
+app.use("/api/admin/dashboard", dashboardRoutes);
 
 // Root Test
 app.get("/", (req, res) => res.json({ status: "OK", message: "MDKC API Running 🚀" }));
 
 // Run Server
 app.listen(PORT, () => console.log(`👉 Server running on port ${PORT}`));
+
+
+app.use("/api/admin/dashboard", dashboardRoutes);

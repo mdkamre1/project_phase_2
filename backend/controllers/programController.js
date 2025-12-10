@@ -8,7 +8,7 @@ export const getPrograms = (req, res) => {
   });
 };
 
-// Add program
+// Add new program
 export const addProgram = (req, res) => {
   const { title, country, description, tuition_fee } = req.body;
   if (!title || !country || !description || !tuition_fee)
@@ -19,7 +19,7 @@ export const addProgram = (req, res) => {
     [title, country, description, tuition_fee],
     (err) => {
       if (err) return res.status(500).json({ error: err.message });
-      res.status(201).json({ message: "Program added" });
+      res.status(201).json({ message: "Program added successfully" });
     }
   );
 };

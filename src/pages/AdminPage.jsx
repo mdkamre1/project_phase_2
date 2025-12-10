@@ -1,137 +1,88 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import api, { setAuthToken } from "../api/api";
 
-function AdminPage() {
-  const [token, setToken] = useState(localStorage.getItem("adminToken") || "");
-  const [loading, setLoading] = useState(false);
-  const [messages, setMessages] = useState([]);
+const AdminPage = () => {
   const [enquiries, setEnquiries] = useState([]);
-  const [loginData, setLoginData] = useState({ username: "", password: "" });
 
-  // Handle Login Input
-  function handleChange(e) {
-    setLoginData({ ...loginData, [e.target.name]: e.target.value });
-  }
+  // 🔹 Fetch enquiries from backend
+  const fetchEnquiries = useCallback(async () => {
+    try {
+      const token = localStorage.getItem("token");
+      setAuthToken(token);
+      const res = await api.get("/enquiries");
+      setEnquiries(res.data);
+    } catch (err) {
+      alert("Failed to load enquiries");
+    }
+  }, []);
 
-  // Login Request
-  async function handleLogin(e) {
-    e.preventDefault();
-    setLoading(true);
+  // 🔸 Delete enquiry by ID
+  const deleteEnquiry = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this message?")) return;
 
     try {
-      const res = await fetch("http://localhost:4000/api/admin/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(loginData),
-      });
-
-      const data = await res.json();
-      if (data.token) {
-        localStorage.setItem("adminToken", data.token);
-        setToken(data.token);
-        alert("Login Successful!");
-      } else {
-        alert("Invalid credentials");
-      }
-    } finally {
-      setLoading(false);
+      const token = localStorage.getItem("token");
+      setAuthToken(token);
+      await api.delete(`/enquiries/${id}`);
+      fetchEnquiries(); // refresh list after delete
+    } catch (err) {
+      alert("Failed to delete enquiry");
     }
-  }
+  };
 
-  // Fetch Messages
-  async function loadMessages() {
-    const res = await fetch("http://localhost:4000/api/admin/messages", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await res.json();
-    setMessages(data);
-  }
+  // 🔹 Load enquiries on first render
+  useEffect(() => {
+    fetchEnquiries();
+  }, [fetchEnquiries]);
 
-  // Fetch Enquiries
-  async function loadEnquiries() {
-    const res = await fetch("http://localhost:4000/api/enquiry-list", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await res.json();
-    setEnquiries(data);
-  }
-
-  // Logout
-  function logout() {
-    localStorage.removeItem("adminToken");
-    setToken("");
-  }
-
-  // If not logged in, show login form
-  if (!token) {
-    return (
-      <section className="container">
-        <h2>Admin Login</h2>
-        <form onSubmit={handleLogin}>
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={handleChange}
-            required
-          />
-          <button type="submit" className="btn primary" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
-          </button>
-        </form>
-      </section>
-    );
-  }
-
-  // Dashboard View
   return (
-    <section className="container">
-      <h2>Admin Dashboard</h2>
-      <button className="btn ghost" onClick={logout}>Logout</button>
+    <div style={{ padding: "40px" }}>
+      <h1>📩 Admin Messages</h1>
+      <p>View & delete enquiries submitted by users.</p>
 
-      {/* ==== CONTACT MESSAGES ==== */}
-      <h3>📬 Contact Messages</h3>
-      <button className="btn primary" onClick={loadMessages}>
-        Load Messages
-      </button>
-      <ul>
-        {messages.map((msg) => (
-          <li key={msg.id}>
-            <strong>{msg.name}</strong> ({msg.email})
-            <br />
-            💬 {msg.message}
-            <hr />
-          </li>
-        ))}
-      </ul>
-
-      {/* ==== ENQUIRIES ==== */}
-      <h3>📌 Enquiries</h3>
-      <button className="btn primary" onClick={loadEnquiries}>
-        Load Enquiries
-      </button>
-      <ul>
-        {enquiries.map((enq) => (
-          <li key={enq.id}>
-            <strong>{enq.full_name}</strong> ({enq.email})
-            <br />
-            📱 {enq.phone} | 🌍 {enq.nationality}
-            <br />
-            🎓 <b>Program:</b> {enq.program}
-            <br />
-            💬 <b>Message:</b> {enq.message}
-            <hr />
-          </li>
-        ))}
-      </ul>
-    </section>
+      {enquiries.length === 0 ? (
+        <p>No enquiries yet.</p>
+      ) : (
+        <table
+          border="1"
+          cellPadding="10"
+          style={{ width: "100%", marginTop: "20px", borderCollapse: "collapse" }}
+        >
+          <thead style={{ background: "#efefef" }}>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Message</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {enquiries.map((e) => (
+              <tr key={e.id}>
+                <td>{e.name}</td>
+                <td>{e.email}</td>
+                <td>{e.message}</td>
+                <td>
+                  <button
+                    onClick={() => deleteEnquiry(e.id)}
+                    style={{
+                      color: "white",
+                      background: "red",
+                      border: "none",
+                      padding: "5px 10px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
   );
-}
+};
 
 export default AdminPage;
