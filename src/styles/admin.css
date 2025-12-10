@@ -95,3 +95,24 @@
 .admin-form button:hover {
   background: #0055aa;
 }
+
+/* ==== Programs Description Cell ==== */
+.admin-table td:nth-child(4) {
+  max-width: 350px;
+  white-space: normal;
+  word-wrap: break-word;
+  line-height: 1.4;
+}
+
+
+.admin-table img {
+  border: 1px solid #ccc;
+  padding: 2px;
+  background: #fff;
+}
+
+.admin-table img {
+  border: 1px solid #ddd;
+  background: white;
+  padding: 3px;
+}

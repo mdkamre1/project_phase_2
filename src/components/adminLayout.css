@@ -1,0 +1,58 @@
+/* =============== LAYOUT =============== */
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* =============== SIDEBAR =============== */
+.admin-sidebar {
+  width: 230px;
+  background: #003366;
+  color: #fff;
+  padding: 20px;
+}
+
+.admin-title {
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* === Links & Buttons === */
+.admin-nav a,
+.logout-btn {
+  display: block;
+  width: 100%;
+  padding: 10px 12px;
+  margin: 6px 0;
+  border-radius: 6px;
+  font-size: 16px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white !important;
+  text-decoration: none;
+  transition: background 0.2s ease-in-out, padding-left 0.2s;
+}
+
+.admin-nav a:hover,
+.logout-btn:hover {
+  background: #0055aa;
+  padding-left: 15px;
+}
+
+/* Logout button red on hover */
+.logout-btn:hover {
+  background: #cc0000;
+}
+
+/* =============== MAIN CONTENT =============== */
+.admin-content {
+  flex: 1;
+  padding: 30px;
+  background: #f6f8fb;
+  overflow-y: auto;
+}

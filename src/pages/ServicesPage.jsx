@@ -1,53 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SectionTitle from "../components/SectionTitle.jsx";
 import ServiceCard from "../components/ServiceCard.jsx";
-
-// Service Data
-const services = [
-  {
-    title: "University Placement",
-    description:
-      "We help students find the right program, prepare applications, and connect with top global universities.",
-    details:
-      "We assist students with program selection, application review, documentation, interview prep, and communication with global universities."
-  },
-  {
-    title: "Visa Assistance",
-    description:
-      "Guided support through every step of your visa process with document and interview preparation.",
-    details:
-      "Our experts provide complete visa guidance including DS-160 filling, document verification, embassy appointment, and mock interviews."
-  },
-  {
-    title: "Test Preparation",
-    description:
-      "IELTS, TOEFL, and other test prep with mock tests and expert feedback.",
-    details:
-      "We offer personalized coaching, practice papers, mock exams, performance analysis, and expert strategies to improve your score."
-  },
-  {
-    title: "Scholarship Guidance",
-    description:
-      "Find scholarships and prepare winning applications to fund your education abroad.",
-    details:
-      "We research scholarships globally, help write winning statements, prepare documentation, and assist in application submissions."
-  },
-];
+import api from "../api/api";
 
 function ServicesPage() {
+  const [services, setServices] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedService, setSelectedService] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Filter Logic
+  // 👉 Fetch services (programs) from backend
+  useEffect(() => {
+    const fetchPrograms = async () => {
+      try {
+        const res = await api.get("/programs");
+        setServices(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+      setLoading(false);
+    };
+
+    fetchPrograms();
+  }, []);
+
+  // 🔍 Filter logic
   const filteredServices = services.filter((s) =>
-    s.title.toLowerCase().includes(searchTerm.toLowerCase())
+    s.title?.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  if (loading) return <p style={{ padding: "60px", textAlign: "center" }}>Loading services...</p>;
 
   return (
     <section id="services">
       <SectionTitle>Our Services</SectionTitle>
 
-      {/* Interactive Component #1: Live Search */}
+      {/* Search Bar */}
       <input
         type="text"
         placeholder="Search services..."
@@ -57,22 +45,28 @@ function ServicesPage() {
       />
 
       <div className="grid">
-        {filteredServices.map((service) => (
-          <ServiceCard
-            key={service.title}
-            title={service.title}
-            description={service.description}
-            onLearnMore={() => setSelectedService(service)}  // open modal
-          />
-        ))}
+        {filteredServices.length > 0 ? (
+          filteredServices.map((service) => (
+            <ServiceCard
+              key={service.id}
+              title={service.title}
+              description={service.description}
+              onLearnMore={() => setSelectedService(service)}
+            />
+          ))
+        ) : (
+          <p>No services found.</p>
+        )}
       </div>
 
-      {/* Interactive Component #2: Popup Modal */}
+      {/* Service Details Modal */}
       {selectedService && (
         <div className="modal-overlay" onClick={() => setSelectedService(null)}>
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
             <h2>{selectedService.title}</h2>
-            <p>{selectedService.details}</p>
+            <p>{selectedService.description}</p>
+            <p><strong>Country:</strong> {selectedService.country}</p>
+            <p><strong>Tuition Fee:</strong> {selectedService.tuition_fee}</p>
             <button className="btn primary" onClick={() => setSelectedService(null)}>
               Close
             </button>

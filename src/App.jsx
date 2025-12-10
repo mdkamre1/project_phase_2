@@ -4,13 +4,18 @@ import Layout from "./components/Layout.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import ServicesPage from "./pages/ServicesPage.jsx";
 import DestinationsPage from "./pages/DestinationsPage.jsx";
+import DestinationDetails from "./pages/DestinationDetails.jsx";
 import SuccessPage from "./pages/SuccessPage.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
+
+import AdminLogin from "./pages/AdminLogin.jsx";
 import AdminDashboard from "./pages/AdminDashboard.jsx";
 import AdminPage from "./pages/AdminPage.jsx";
+import AdminPrograms from "./pages/AdminPrograms.jsx";   // 👈 NEW
 import AdminDestinations from "./pages/AdminDestinations.jsx";
-import DestinationDetails from "./pages/DestinationDetails.jsx";
-import AdminLogin from "./pages/AdminLogin.jsx";
+import AdminTestimonials from "./pages/AdminTestimonials.jsx"; // 👈 NEW
+
+import AdminLayout from "./components/AdminLayout.jsx";  // 👈 NEW WRAPPER
 
 // 🔐 Protect Admin Routes
 const PrivateRoute = ({ children }) => {
@@ -23,7 +28,7 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-        {/* Public Routes */}
+        {/* 🌐 Public Routes */}
         <Route element={<Layout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/services" element={<ServicesPage />} />
@@ -34,33 +39,21 @@ function App() {
           <Route path="/admin/login" element={<AdminLogin />} />
         </Route>
 
-        {/* 🔐 Admin Routes (Protected) */}
+        {/* 🛡️ Admin Area (Wrapped in AdminLayout) */}
         <Route
-          path="/admin/dashboard"
           element={
             <PrivateRoute>
-              <AdminDashboard />
+              <AdminLayout />
             </PrivateRoute>
           }
-        />
+        >
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/messages" element={<AdminPage />} />
+          <Route path="/admin/programs" element={<AdminPrograms />} />  {/* 👈 Services */}
+          <Route path="/admin/destinations" element={<AdminDestinations />} />
+          <Route path="/admin/testimonials" element={<AdminTestimonials />} />
+        </Route>
 
-        <Route
-          path="/admin/messages"
-          element={
-            <PrivateRoute>
-              <AdminPage />
-            </PrivateRoute>
-          }
-        />
-
-        <Route
-          path="/admin/destinations"
-          element={
-            <PrivateRoute>
-              <AdminDestinations />
-            </PrivateRoute>
-          }
-        />
       </Routes>
     </BrowserRouter>
   );
